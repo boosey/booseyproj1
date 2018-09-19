@@ -1,8 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: "{{  .Chart.Name }}-deployment"
+  name: {{ template "fullname" . }}
   labels:
+    microclimate-release: {{ .Values.microclimate.release.name }}
     chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -15,6 +16,8 @@ spec:
   template:
     metadata:
       labels:
+        microclimate-release: {{ .Values.microclimate.release.name }}
+        release: {{ .Release.Name }}
         app: "{{  .Chart.Name }}-selector"
         version: "current"
     spec:

@@ -3,8 +3,10 @@ kind: Service
 metadata:
   annotations:
     prometheus.io/scrape: 'true'
-  name: "{{  .Chart.Name }}-service"
+  name: {{ template "fullname" . }}
   labels:
+    microclimate-release: {{ .Values.microclimate.release.name }}
+    release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   type: {{ .Values.service.type }}
